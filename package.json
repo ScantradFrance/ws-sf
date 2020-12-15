@@ -1,0 +1,22 @@
+{
+  "name": "ws-sf",
+  "version": "1.0.0",
+  "description": "A websocket module to get last chapters releases from https://scantrad.net by the team ScantradFrance.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dastan21/ws-sf.git"
+  },
+  "author": "Dastan21",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dastan21/ws-sf/issues"
+  },
+  "homepage": "https://github.com/Dastan21/ws-sf#readme",
+  "dependencies": {
+    "ws": "^7.4.1"
+  }
+}
