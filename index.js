@@ -6,8 +6,7 @@ class WsSf {
 	#websocket_uri;
 
 	constructor() {
-		// this.#websocket_uri = "ws://ldgr.fr:2006";
-		this.#websocket_uri = "ws://localhost:9484";
+		this.#websocket_uri = "ws://ldgr.fr:2006";
 		this._reconnection_count = 0;
 		this._ws = null;
 		this._emitter = new EventEmitter();
