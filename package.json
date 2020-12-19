@@ -1,6 +1,6 @@
 {
   "name": "ws-sf",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A websocket module to get last chapters releases from https://scantrad.net by the team ScantradFrance.",
   "main": "index.js",
   "scripts": {
