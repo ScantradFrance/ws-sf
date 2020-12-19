@@ -25,22 +25,7 @@ class WsSf {
 
 		this._ws.onopen = () => { this._reconnection_count = 0 };
 
-		this._ws.onmessage = res => {
-			let data = res.data;
-			try { data = JSON.parse(data); }
-			catch (e) { console.error(e) }
-			data.chapters.reverse();
-			data.mangas.reverse();
-			let releases = [];
-			for (let i = 0; i < data.chapters.length; i++) {
-				releases.push({
-					id: data.mangas[i].id,
-					name: data.mangas[i].name,
-					number: data.chapters[i].number
-				});
-			}
-			this._emitter.emit('release', releases);
-		};
+		this._ws.onmessage = res => { this._emitter.emit('release', res.data) };
 
 		this._ws.onerror = () => {};
 
