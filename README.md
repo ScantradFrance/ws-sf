@@ -38,7 +38,7 @@ Bind a callback function to handle new chapters datas.
 
 ## Changelog
 
-I am using the GitHub [releases](https://github.com/websockets/ws/releases) for changelog entries.
+I am using the GitHub [releases](https://github.com/Dastan21/ws-sf/releases) for changelog entries.
 
 ## License
 
