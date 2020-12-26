@@ -10,7 +10,7 @@ npm install ws-sf
 
 ## How to use
 
-```
+```js
 const WsSf = require('ws-sf');
 
 // connect to the websocket
