@@ -35,10 +35,21 @@ Create a new websocket instance connected to the API.
 - `Params`: {Function} A callback function.
 
 Bind a callback function to handle new chapters datas.
+The function has one parameter, an array of objects of the chapters :
+```js
+{
+	id, // manga id
+	name, // manga name
+	title, // chapter title
+	number, // chapter number
+	thumbnail, // manga thumbnail
+	image // chapter first page
+}
+```
 
 ## Changelog
 
-I am using the GitHub [releases](https://github.com/Dastan21/ws-sf/releases) for changelog entries.
+See [releases](https://github.com/Dastan21/ws-sf/releases) for changelog entries.
 
 ## License
 
