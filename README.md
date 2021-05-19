@@ -8,7 +8,7 @@ ws-sf is a websocket module to get last chapters releases by the team [ScantradF
 npm install ws-sf
 ```
 
-## How to use
+## Usage
 
 ```js
 const WsSf = require('ws-sf');
@@ -22,6 +22,7 @@ wssf.onrelease(chapters => {
 });
 
 ```
+
 ## Class: WsSf
 
 This class represents a WebSocket server. It extends the `EventEmitter`.
@@ -35,15 +36,16 @@ Create a new websocket instance connected to the API.
 - `Params`: {Function} A callback function.
 
 Bind a callback function to handle new chapters datas.
-The function has one parameter, an array of objects of the chapters :
+The function has one parameter, an object of the new chapter (string):
 ```js
 {
-	id, // manga id
-	name, // manga name
-	title, // chapter title
-	number, // chapter number
-	thumbnail, // manga thumbnail
-	image // chapter first page
+	manga: {
+		id [string] 		// manga id
+		name [string] 		// manga name
+		thumbnail [url] 	// manga thumbnail
+	}, 
+	title [string] 			// chapter title
+	number [number]			// chapter number
 }
 ```
 

@@ -32,7 +32,7 @@ class WsSf {
 		this._ws.onclose = () => {
 			this._ws = null;
 			this._reconnection_count++;
-			if (this._reconnection_count < 5) { console.log("Connection lost: Trying to reconnect in 5 seconds."); setTimeout(() => { this.#connect() }, 5000); }
+			if (this._reconnection_count < 5) { console.log("Connection lost: Trying to reconnect in 10 seconds."); setTimeout(() => { this.#connect() }, 10000); }
 			else throw new Error("Attempted to reconnect to server 5 times but failed.");
 		};
 	}
