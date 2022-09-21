@@ -1,42 +1,69 @@
-const WebSocket = require('ws');
-const EventEmitter = require('events');
+import WebSocket from 'ws'
+import EventEmitter from 'node:events'
 
+const timeouts = [1, 5, 15, 30, 60]
+
+/**
+ * Manga type.
+ * @typedef {Object} Manga
+ * @property {string} id
+ * @property {string} name
+ * @property {string} thumbnail
+ *
+ * Chapter type.
+ * @typedef {Object} Chapter
+ * @property {Manga} manga
+ * @property {string} title
+ * @property {number} number
+ */
+
+/**
+ * ScantradFrance WebSocket class.
+ */
 class WsSf {
-
-	#websocket_uri;
-
-	constructor() {
-		this.#websocket_uri = "ws://ldgr.fr:2006";
-		this._reconnection_count = 0;
-		this._ws = null;
-		this._emitter = new EventEmitter();
-		this.#connect();
+	/**
+	 * Connect to the server.
+	 * @param {string} uri server URI 
+	 */
+	constructor(uri) {
+		if (uri == null || uri === '') throw new Error('Server URI is required')
+		this.#websocket_uri = uri
+		this.#reconnection_count = 0
+		this.#ws = null
+		this.#emitter = new EventEmitter()
+		this.#connect()
 	}
 
+	/**
+	 * Emitted when a chapter is released.
+	 * @param {(releases: Chapter) => void} cb callback function 
+	 */
 	onrelease(cb) {
-		this._emitter.on('release', releases => {
-			if (typeof cb !== "function") throw new Error("cb is not a function");
-			cb(releases);
-		});
+		this.#emitter.on('release', releases => {
+			if (typeof cb !== 'function') throw new Error('cb is not a function')
+			cb(releases)
+		})
 	}
 
-	#connect = () => {
-		this._ws = new WebSocket(this.#websocket_uri);
+	#connect() {
+		this.#ws = new WebSocket(this.#websocket_uri)
 
-		this._ws.onopen = () => { this._reconnection_count = 0 };
+		this.#ws.onopen = () => { this.#reconnection_count = 0 }
 
-		this._ws.onmessage = res => { this._emitter.emit('release', res.data) };
+		this.#ws.onmessage = res => { this.#emitter.emit('release', res.data) }
 
-		this._ws.onerror = () => {};
+		this.#ws.onerror = () => { }
 
-		this._ws.onclose = () => {
-			this._ws = null;
-			this._reconnection_count++;
-			if (this._reconnection_count < 5) { console.log("Connection lost: Trying to reconnect in 10 seconds."); setTimeout(() => { this.#connect() }, 10000); }
-			else throw new Error("Attempted to reconnect to server 5 times but failed.");
-		};
+		this.#ws.onclose = () => {
+			this.#ws = null
+			this.#reconnection_count++
+			if (this.#reconnection_count < timeouts.length) {
+				console.log(`Connection lost: Trying to reconnect in ${timeouts[this.#reconnection_count]} seconds.`)
+				setTimeout(this.#connect, 10000)
+			} else throw new Error('Attempted to reconnect to server 5 times but failed.')
+		}
 	}
-
 }
 
-module.exports = WsSf;
+export { WsSf }
+export default WsSf
