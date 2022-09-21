@@ -3,6 +3,7 @@
   "version": "1.2.0",
   "description": "A websocket module to get last chapters releases from https://scantrad.net by the team ScantradFrance.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "prettier": "prettier-config-standard"
