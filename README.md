@@ -15,6 +15,7 @@ import WsSf from 'ws-sf'
 
 // connect to the websocket
 const wssf = new WsSf('ws://localhost:3000')
+wssf.connect()
 
 // get new chapters in real-time
 wssf.onrelease(release => {

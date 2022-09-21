@@ -21,6 +21,11 @@ const timeouts = [1, 5, 15, 30, 60]
  * ScantradFrance WebSocket class.
  */
 class WsSf {
+	#reconnection_count = 0
+	#websocket_uri = null
+	#ws = null
+	#emitter = null
+
 	/**
 	 * Connect to the server.
 	 * @param {string} uri server URI 
@@ -28,10 +33,7 @@ class WsSf {
 	constructor(uri) {
 		if (uri == null || uri === '') throw new Error('Server URI is required')
 		this.#websocket_uri = uri
-		this.#reconnection_count = 0
-		this.#ws = null
 		this.#emitter = new EventEmitter()
-		this.#connect()
 	}
 
 	/**
@@ -45,7 +47,8 @@ class WsSf {
 		})
 	}
 
-	#connect() {
+	connect() {
+		console.log(this.#websocket_uri)
 		this.#ws = new WebSocket(this.#websocket_uri)
 
 		this.#ws.onopen = () => { this.#reconnection_count = 0 }
@@ -58,8 +61,9 @@ class WsSf {
 			this.#ws = null
 			this.#reconnection_count++
 			if (this.#reconnection_count < timeouts.length) {
-				console.log(`Connection lost: Trying to reconnect in ${timeouts[this.#reconnection_count]} seconds.`)
-				setTimeout(this.#connect, 10000)
+				const time = timeouts[this.#reconnection_count - 1]
+				console.log(`Connection lost: Trying to reconnect in ${time} second${time > 1 ? 's' : ''}.`)
+				setTimeout(this.connect, 10000)
 			} else throw new Error('Attempted to reconnect to server 5 times but failed.')
 		}
 	}
